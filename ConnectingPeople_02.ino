@@ -16,13 +16,18 @@ const int frequency =  500;
 const int duration  = 500;
 //***
 
-// Timers vsriables
+// Timers vsriablesd
 unsigned long count        = 0;
 unsigned long currentCount = 0;
+unsigned long sparkCount   = 0;
+
 unsigned long previousMillis      = 0;
 unsigned long countPreviousMillis = 0;
+unsigned long sparkPreviousMillis = 0;
+
 const long interval       =   50;
 const long countInterval  = 1000;
+const long sparkInterval  =  100;
 //***    
 
 // Pulses settings
