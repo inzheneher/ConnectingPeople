@@ -51,18 +51,9 @@ void setup() {
 }
 
 void loop() {
-
-  // Wait for signal from main controller
-  if (digitalRead(triggerPin) == LOW) {
-    delay(10);
-    if (digitalRead(triggerPin) == LOW) {
-      trigger = true;
-    }
-  }
   
   // Program starts from here after signal from main controller
-  if (trigger) {
-      analogWrite(sparkPin, random(lowRangeRandom, highRangeRandom));
+  analogWrite(sparkPin, digitalRead(triggerPin));
 
   // 
   unsigned long currentMillis = micros();
@@ -104,6 +95,5 @@ void loop() {
       }
       currentCount = count;
     }  
-  }
 }
 
