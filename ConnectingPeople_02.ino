@@ -2,8 +2,8 @@
 const int triggerPin   =  7; //input
 const int nextStagePin =  8; //output
 const int sparkPin     = 10; //output
-const int pulsePin     = A4; //19 output
 const int buzzerPin    = A0; //output
+const int pulsePin     = A4; //19 output
 const int recivePin    = A5; //28 input
 //***
 
@@ -53,7 +53,7 @@ void setup() {
 void loop() {
   
   // Program starts from here after signal from main controller
-  analogWrite(sparkPin, digitalRead(triggerPin));
+  digitalWrite(sparkPin, digitalRead(triggerPin));
 
   // 
   unsigned long currentMillis = micros();
