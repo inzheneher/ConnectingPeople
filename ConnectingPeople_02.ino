@@ -1,6 +1,6 @@
 // Pin constant declaration
-const int nextStagePin =  8; //output
 const int triggerPin   =  7; //input
+const int nextStagePin =  8; //output
 const int sparkPin     = 10; //output
 const int pulsePin     = A4; //19 output
 const int buzzerPin    = A0; //output
