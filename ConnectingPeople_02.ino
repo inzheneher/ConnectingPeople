@@ -27,12 +27,13 @@ unsigned long sparkPreviousMillis = 0;
 
 const long interval       =   50;
 const long countInterval  = 1000;
-const long sparkInterval  =  100;
+long sparkInterval  =  100;
 //***    
 
 // Pulses settings
 int lowRange = 5000; // Amount of counting pulses
 int ledState = LOW;  // Default pulse state
+int sparkLedState = LOW; // Default spark state
 int pulseDetectionLevel = 800; // Detect pulses higher level, than this
 //***
 
@@ -57,13 +58,20 @@ void setup() {
 
 void loop() {
   
-  // Program starts from here after signal from main controller
-  digitalWrite(sparkPin, digitalRead(triggerPin));
+  // Wait for signal from main controller
+  if (digitalRead(triggerPin) == LOW) {
+    delay(10);
+    if (digitalRead(triggerPin) == LOW) {
+      trigger = true;
+    }
+  }
 
-  // 
+  if (trigger) {
+
   unsigned long currentMillis = micros();
   unsigned long countCurrentMillis = millis();
-
+  unsigned long sparkPreviousMillis = millis();
+  
   if (currentMillis - previousMillis >= interval) {
     
     previousMillis = currentMillis;
@@ -74,8 +82,19 @@ void loop() {
       ledState = LOW;
     }
     digitalWrite(pulsePin, ledState);
+    
     //Serial.println(analogRead(recivePin));
     if (analogRead(recivePin) > pulseDetectionLevel) {
+
+      if (sparkCount - sparkPreviousMillis >= sparkInterval) {
+        if (sparkLedState == LOW) {
+          sparkLedState = HIGH;
+        } else {
+          sparkLedState = LOW;
+        }
+        digitalWrite(sparkPin, sparkLedState);
+        sparkInterval = random(100, 500);
+      }
       
       count++;
       //Serial.println(digitalRead(recivePin));
@@ -83,6 +102,7 @@ void loop() {
       digitalWrite(13, HIGH);
     } else {
       digitalWrite(13, LOW);
+      digitalWrite(sparkPin, LOW);
     }
   }
 
@@ -100,5 +120,6 @@ void loop() {
       }
       currentCount = count;
     }  
+  }
 }
 
